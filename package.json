@@ -1,0 +1,25 @@
+{
+  "name": "d3-explore",
+  "version": "1.0.0",
+  "description": "拥有实时重载，并且支持es6语法的脚手架",
+  "main": ".eslintrc.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gulp",
+    "babel"
+  ],
+  "author": "kasmine",
+  "license": "MIT",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-connect": "^5.0.0",
+    "gulp-less": "^3.3.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-uglify": "^3.0.0",
+    "minimist": "^1.2.0",
+    "pump": "^1.0.2"
+  },
+  "dependencies": {}
+}
