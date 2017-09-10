@@ -1,27 +1,39 @@
 const gulp = require("gulp"),
     less = require("gulp-less"),
     rename = require("gulp-rename"),
+    path = require("path"),
+    ts = require('gulp-typescript'),
     connect = require("gulp-connect"),
     uglify = require("gulp-uglify"),
     pump = require("pump"),
-    minimist = require("minimist")
+    minimist = require("minimist");
 
 const knownOptions = {
-    string: "chapter",
-    default: { chapter: "main" }
+    string: "path",
 }
 
-const options = minimist(process.argv.slice(1), knownOptions)
-const chapter = options.chapter === "main" ? "main" : "chapter" + options.chapter
-
-
+const tsProject = ts.createProject('tsconfig.json', { noImplicitAny: true });
 
 gulp.task("less", function() {
-    return gulp.src("app/less/main.less")
+    return gulp.src("src/less/index.less")
     .pipe(less())
-    .pipe(gulp.dest("app/css"))
+    .pipe(gulp.dest("dist/css"))
     .pipe(connect.reload())
-})
+});
+
+gulp.task('ts', function() {
+    const options = minimist(process.argv.slice(1), knownOptions)
+    const tsFilePath = options.path;
+    let tsFile = 'index.ts';
+    if (tsFilePath) {
+        tsFile = /(?:\.[ts|js]$)/.test(tsFilePath) ? tsFilePath : tsFilePath + '/index.ts';
+    }
+    return gulp.src([`src/${tsFile}`])
+    .pipe(rename('app.ts'))
+    .pipe(tsProject())
+    .pipe(gulp.dest('dist'))
+    .pipe(connect.reload());
+});
 
 gulp.task("data",function(){
     return gulp.src("data/**.csv")
@@ -29,32 +41,21 @@ gulp.task("data",function(){
     .pipe(connect.reload())
 })
 
-gulp.task("js", function(cb) {
-    pump([
-        gulp.src(`app/scripts/${chapter}.js`),
-        rename("index.js"),
-        uglify(),
-        gulp.dest("app"),
-        connect.reload()
-    ],
-    cb
-  )
-})
-
-gulp.task("watch", function(){
-    gulp.src("app/index.html")
+gulp.task("html", function(){
+    gulp.src("public/*.html")
     .pipe(connect.reload())
 })
 
-gulp.task("default", ["watch","less","js","data"], function() {    // 这里的watch，是自定义的，写成live或者别的也行
-    
+gulp.task("watch", () => {
+    // src/**/*.*的意思是 src文件夹下的 任何文件夹 的 任何文件
+    gulp.watch("public/*.html", ["html"])
+    gulp.watch("src/less/*.less", ["less"])
+    gulp.watch("src/**/*.ts", ["ts"])
+    gulp.watch("data/*.*", ["data"])
+});
+
+gulp.task("default", ["watch", "html","less","ts","data"], () => {    // 这里的watch，是自定义的，写成live或者别的也行
     connect.server({
         livereload: true
     })
-
-    // app/**/*.*的意思是 app文件夹下的 任何文件夹 的 任何文件
-    gulp.watch("app/index.html", ["watch"])
-    gulp.watch("app/less/*.less", ["less"])
-    gulp.watch("app/scripts/*.js", ["js"])
-    gulp.watch("data/*.*", ["data"])
 })

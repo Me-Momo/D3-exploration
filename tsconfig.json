@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "types": [
+      "node"
+    ],
+    "target": "es5",
+    "module": "commonjs",
+    "allowJs": false,
+    "outDir": "dist"
+    },
+    "exclude": [
+      "dist",
+      "src/scripts"
+    ]
+}

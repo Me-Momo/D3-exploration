@@ -1,5 +1,5 @@
-var i 
-
+// @ts-check
+var i;
 
 var dataset = []
 
@@ -12,6 +12,7 @@ var svgAreaHeight = 500
 
 // Create Scale
 // 使用比例尺来控制尺寸
+
 var scale = d3.scale.linear()
   .domain([500, d3.max(dataset)])
   .range([svgAreaWidth - 200, svgAreaHeight - 100])
@@ -27,14 +28,18 @@ var rects = svg.selectAll("rect").data(dataset).enter().append("rect")
 
 var barPadding = 2 
 
-rects.attr("x", function(d, i){
-    return i * Math.round(svgAreaHeight/dataset.length)
-}).attr("y", 0).attr("width", Math.round(svgAreaHeight/dataset.length) - barPadding)
-.attr("height",function(d){
-    return scale(d)
-}).attr("fill",function(d){
-    if(scale(d) > svgAreaHeight / 5 * 4 ){
-        return "pink"
-    }
-    return "green"
-})
+newFunction();
+
+function newFunction() {
+    rects.attr("x", function(d, i) {
+    return i * Math.round(svgAreaHeight / dataset.length);
+}).attr("y", 0).attr("width", Math.round(svgAreaHeight / dataset.length) - barPadding)
+    .attr("height", function(d) {
+    return scale(d);
+}).attr("fill", function(d) {
+    if(scale(d)> svgAreaHeight / 5 * 4) {
+    return "pink";
+}
+    return "green";
+});
+}
