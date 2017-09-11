@@ -2,17 +2,17 @@ const gulp = require("gulp"),
     less = require("gulp-less"),
     rename = require("gulp-rename"),
     path = require("path"),
-    ts = require('gulp-typescript'),
     connect = require("gulp-connect"),
     uglify = require("gulp-uglify"),
     pump = require("pump"),
-    minimist = require("minimist");
-
+    minimist = require("minimist"),
+    rollup = require('rollup'),
+    rollupTypescript = require('rollup-plugin-typescript2');
+    
 const knownOptions = {
     string: "path",
 }
 
-const tsProject = ts.createProject('tsconfig.json', { noImplicitAny: true });
 
 gulp.task("less", function() {
     return gulp.src("src/less/index.less")
@@ -26,14 +26,27 @@ gulp.task('ts', function() {
     const tsFilePath = options.path;
     let tsFile = 'index.ts';
     if (tsFilePath) {
-        tsFile = /(?:\.[ts|js]$)/.test(tsFilePath) ? tsFilePath : tsFilePath + '/index.ts';
+        tsFile = /(?:\.[ts|js])/.test(tsFilePath) ? tsFilePath : (tsFilePath + '/index.ts');
     }
-    return gulp.src([`src/${tsFile}`])
-    .pipe(rename('app.ts'))
-    .pipe(tsProject())
-    .pipe(gulp.dest('dist'))
-    .pipe(connect.reload());
+    return rollup.rollup({
+        input: `./src/${tsFile}`,
+        plugins: [
+          rollupTypescript({
+            tsconfig: "./tsconfig.json"
+        }),
+        ],
+      })
+        .then(function (bundle) {
+          bundle.write({
+            format: "umd",
+            name: "app",
+            sourcemap: true,
+            file: "./dist/app.js", 
+            external: ['d3'] // 🐶 indicate which modules should be treated as external
+          });
+        });
 });
+
 
 gulp.task("data",function(){
     return gulp.src("data/**.csv")
@@ -50,7 +63,7 @@ gulp.task("watch", () => {
     // src/**/*.*的意思是 src文件夹下的 任何文件夹 的 任何文件
     gulp.watch("public/*.html", ["html"])
     gulp.watch("src/less/*.less", ["less"])
-    gulp.watch("src/**/*.ts", ["ts"])
+    gulp.watch("src/**/*.ts", ["ts", "html"])
     gulp.watch("data/*.*", ["data"])
 });
 

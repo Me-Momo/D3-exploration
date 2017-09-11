@@ -4,12 +4,14 @@
       "node"
     ],
     "target": "es5",
-    "module": "commonjs",
+    "moduleResolution": "node",
+    "module": "es2015",
     "allowJs": false,
     "outDir": "dist"
     },
     "exclude": [
       "dist",
-      "src/scripts"
+      "src/scripts",
+      "node_modules"
     ]
 }

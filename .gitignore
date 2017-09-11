@@ -1,1 +1,12 @@
+# npm
 node_modules
+npm-debug.log
+
+# error
+.DS_Store
+
+# typescript
+.rpt2_cache
+
+# typescript output
+dist

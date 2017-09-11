@@ -1,8 +1,8 @@
-export interface IDataset {
+export interface IDataset  {
   label: string;
   count: number;
 }
-const dataset = [
+const dataset: IDataset[] = [
   { label: 'Abulia', count: 10 },
   { label: 'Betelgeuse', count: 20 },
   { label: 'Cantaloupe', count: 30 },
