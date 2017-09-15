@@ -1,0 +1,19 @@
+{
+    "defaultSeverity": "error",
+    "extends": [
+        "tslint:recommended"
+    ],
+    "jsRules": {},
+    "rules": {
+        "no-var-keyword": true,
+        "arrow-parens": false,
+        "quotemark": false,
+        "object-literal-sort-keys": false, // 按字母顺序排序
+        "member-access": false,
+        "ordered-imports": false,
+        "max-classes-per-file": false
+    },
+    "rulesDirectory": [
+        "src/**/*.(ts|tsx)"
+    ]
+}

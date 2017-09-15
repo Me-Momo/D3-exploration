@@ -1,12 +1,12 @@
 {
-  "name": "d3-explore",
+  "name": "d3-exploration",
   "version": "1.0.0",
   "description": "拥有实时重载，并且支持es6语法的脚手架",
   "main": ".eslintrc.js",
   "scripts": {
     "start": "gulp",
     "watch": "tsc watch",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "gulp",
@@ -29,6 +29,7 @@
     "rollup": "^0.49.3",
     "rollup-plugin-node-resolve": "^3.0.0",
     "rollup-plugin-typescript2": "^0.5.2",
+    "ts-jest": "^21.0.1",
     "typescript": "^2.5.2"
   },
   "dependencies": {
@@ -39,5 +40,37 @@
     "debug": "^3.0.1",
     "path": "^0.12.7",
     "typescript": "^2.5.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Me-Momo/D3-exploration.git"
+  },
+  "jest": {
+    "transform": {
+      ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
+    },
+    "testRegex": "/src/.*/.*\\.spec\\.(js|ts|tsx)$",
+    "collectCoverageFrom": [
+      "src/**/*.{js,ts,tsx}",
+      "!**/*.d.ts",
+      "!src/findChinese"
+    ],
+    "coverageDirectory": "coverage",
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "moduleNameMapper": {
+      "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$": "<rootDir>/test_configs/.file-mock.js",
+      "\\.(css|less)$": "<rootDir>/test_configs/.jest-ignore.js"
+    },
+    "moduleDirectories": [
+      "src",
+      "node_modules"
+    ],
+    "setupFiles": [
+      "<rootDir>/tests/setup.js"
+    ]
   }
 }
