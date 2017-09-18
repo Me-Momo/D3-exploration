@@ -11,7 +11,9 @@
         "object-literal-sort-keys": false, // 按字母顺序排序
         "member-access": false,
         "ordered-imports": false,
-        "max-classes-per-file": false
+        "max-classes-per-file": false,
+        "no-unused-variable": true,
+        "no-unused-expression": true
     },
     "rulesDirectory": [
         "src/**/*.(ts|tsx)"

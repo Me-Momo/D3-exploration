@@ -1660,7 +1660,8 @@ module d3 {
 
     export function ordinal<Range>(): Ordinal<string, Range>;
     export function ordinal<Domain extends { toString(): string }, Range>(): Ordinal<Domain, Range>;
-    export function category10(): Ordinal<string, string>;
+    // FIXME:
+    export function category10(arg: any): Ordinal<string, string>;
     export function category10<Domain extends { toString(): string }>(): Ordinal<Domain, string>;
     export function category20(): Ordinal<string, string>;
     export function category20<Domain extends { toString(): string }>(): Ordinal<Domain, string>;

@@ -52,8 +52,7 @@
     "testRegex": "/src/.*/.*\\.spec\\.(js|ts|tsx)$",
     "collectCoverageFrom": [
       "src/**/*.{js,ts,tsx}",
-      "!**/*.d.ts",
-      "!src/findChinese"
+      "!**/*.d.ts"
     ],
     "coverageDirectory": "coverage",
     "moduleFileExtensions": [
@@ -66,7 +65,6 @@
       "\\.(css|less)$": "<rootDir>/test_configs/.jest-ignore.js"
     },
     "moduleDirectories": [
-      "src",
       "node_modules"
     ],
     "setupFiles": [

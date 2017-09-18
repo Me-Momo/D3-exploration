@@ -1,18 +1,14 @@
 import * as d3 from "d3";
-import { debug } from "../../utils";
-import { IBoxSize, ISvgContainerOptions } from "./interface";
+import { ID3Svg, ID3SvgOpts } from './interface/ID3Svg';
+import { IBoxSize } from './interface/dataType';
 
-/**
- * @class D3SvgFactory
- * @desc 初始化 d3-svg Container
- */
-class D3SvgFactory {
+class D3Svg {
 
-  private svg: d3.Selection<any>;
+  private svg: ID3Svg;
   private wrapperContainer: HTMLElement | HTMLDivElement;
 
   constructor(
-    options: ISvgContainerOptions = {},
+    options: ID3SvgOpts = {},
   ) {
     const container = options.container || DEFAULT_CONTAINER();
     const width = DEFAULT_CONTAINER_WIDTH;
@@ -29,20 +25,22 @@ class D3SvgFactory {
     this.svg = d3
       .select(this.wrapperContainer)
       .append("svg")
-      .style({ ...style })
       .attr("width", width)
-      .attr("height", height);
+      .attr("height", height)
+      .style({ ...style } as { [key: string]: string});
   }
 
-  getSvgContainer(): d3.Selection<any> {
+  create(): ID3Svg {
+    this.svg = Object.assign(this.svg, {
+      getSize: () => this.getSVGSize(),
+    })
     return this.svg;
   }
 
-  getSvgContainerSize(): IBoxSize {
+  private getSVGSize(): IBoxSize {
     if (this.svg) {
       // Notice: it's SVGSVGElement
       const node = this.svg.node() as SVGSVGElement;
-      logger(node.getBoundingClientRect());
       const box = node.getBoundingClientRect();
       return box;
     }
@@ -51,6 +49,7 @@ class D3SvgFactory {
       height: 0,
     };
   }
+  
   public addWrapperStyle(styles: { [key: string]: string }) {
     Object.keys(styles).map(key => {
       this.wrapperContainer.style.setProperty(key, styles[key]);
@@ -58,7 +57,6 @@ class D3SvgFactory {
   }
 }
 
-const logger = debug("Week01");
 const DEFAULT_CONTAINER_WIDTH = "100%";
 const DEFAULT_CONTAINER__HEIGHT = "100%";
 const DEFAULT_CONTAINER = (): HTMLElement => {
@@ -67,4 +65,4 @@ const DEFAULT_CONTAINER = (): HTMLElement => {
   return container;
 };
 
-export default D3SvgFactory;
+export default D3Svg;

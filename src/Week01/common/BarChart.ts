@@ -1,26 +1,25 @@
-import * as d3 from 'd3';
-import D3SvgFactory from './SvgContainerFactory';
-import { IBarChart, SvgContainer } from './interface';
+import BaseChart from "./BaseChart";
+import { IBaseChartOpts } from "./interface/IBaseChart";
 
 /**
  * @class d3-bar-chart
  */
-class BarChart {
+class BarChart extends BaseChart {
 
-  private svgContainer: SvgContainer;
-  private data: any[];
-
-  constructor(options: IBarChart) {
-    this.svgContainer = options.container;
-    this.data = options.data;
+  constructor(opts: IBaseChartOpts) {
+    super(opts);
   }
 
   initChart() {
-    // this.svgContainer
-    // .selectAll('rect')
-    // .
+    this.d3Svg = this.d3Svg
+      .selectAll("rect")
+      .data(this.data)
+      .enter()
+      .append("rect");
   }
 
+  // TODO: 对于BarChart，可以添加坐标轴
 }
+
 
 export default BarChart;

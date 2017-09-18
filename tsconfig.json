@@ -3,11 +3,18 @@
     "types": [
       "node"
     ],
+    "lib": [
+      "es6",
+      "dom"
+    ],
     "target": "es5",
     "moduleResolution": "node",
+    "strict": true,
     "module": "es2015",
     "allowJs": false,
-    "outDir": "dist"
+    "outDir": "dist",
+    "noUnusedLocals": true,
+    "noImplicitAny": false
     },
     "exclude": [
       "dist",
