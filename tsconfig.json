@@ -1,8 +1,7 @@
 {
   "compilerOptions": {
-    "types": [
-      "node"
-    ],
+    "typeRoots" : [ "node_modules" ],
+    "types" : [ "types.d3" ],
     "lib": [
       "es6",
       "dom"
@@ -12,6 +11,8 @@
     "strict": true,
     "module": "es2015",
     "allowJs": false,
+    "baseUrl": "src",
+    "rootDir": "src",
     "outDir": "dist",
     "noUnusedLocals": true,
     "noImplicitAny": false

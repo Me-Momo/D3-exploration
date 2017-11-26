@@ -5,8 +5,13 @@ npm-debug.log
 # error
 .DS_Store
 
+
+
 # typescript
 .rpt2_cache
+typings/**/*.d.ts
 
 # typescript output
 dist
+
+# ignore draft

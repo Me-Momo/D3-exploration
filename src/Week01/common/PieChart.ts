@@ -1,8 +1,9 @@
-import * as d3 from "d3";
+import * as d3 from '../../d3-bundle';
 // import D3Svg from "./D3Svg";
 // import { IBarChart, ID3Svg } from "./interface";
 import BaseChart from "./BaseChart";
 import { IBaseChartOpts } from "./interface/IBaseChart";
+import { IAdimission } from '../interface';
 
 /**
  * @class d3-bar-chart
@@ -13,35 +14,24 @@ class PieChart extends BaseChart {
   }
 
   initChart() {
-    // const arc = d3.svg
-    //   .arc()
-    //   .innerRadius(20)
-    //   .outerRadius(40);
+    const Arc = d3.arc()
+    .innerRadius(20)
+    .outerRadius(40).cornerRadius;
 
-    const pie = d3.layout.pie().value((datum: number, i: number) => {
-      return datum;
+    const Pie = d3.pie().value((d: IAdimission) => {
+      return d.Count;
     });
     // Alternative
-    const color = d3.scale
-      .ordinal()
-      .range([
-        "#A60F2B",
-        "#648C85",
-        "#B3F2C9",
-        "#528C18",
-        "#C3F25C"
-      ]) as Function;
+    const color: string[] = d3.schemeCategory20b;
 
     this.d3Svg
       .selectAll("path")
-      .data(pie(this.data))
+      .data(Pie(this.data))
       .enter()
       .append("path")
-      // FIXME: 
-      // .attr('d', arc)
-      .attr("d", 10)
+      .attr('d', Arc)
       .attr("fill", (d, i: number) => {
-        return color("x");
+        return color[i];
       });
   }
 }

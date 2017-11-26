@@ -22,35 +22,35 @@ abstract class BaseChart extends AbstractChart {
 
   x(fn: Function | Primitive) {
     this.d3Svg = this.d3Svg.attr("x", (d, i: number) => {
-      return mormalizeToFn(fn)(d, i);
+      return normalizeToFn(fn)(d, i);
     });
     return this;
   }
 
   y(fn: Function | Primitive) {
     this.d3Svg = this.d3Svg.attr("y", (d, i: number) => {
-      return mormalizeToFn(fn)(d, i);
+      return normalizeToFn(fn)(d, i);
     });
     return this;
   }
 
   width(fn: Function | Primitive) {
     this.d3Svg = this.d3Svg.attr("width", (d, i: number) => {
-      return mormalizeToFn(fn)(d, i);
+      return normalizeToFn(fn)(d, i);
     });
     return this;
   }
 
   height(fn: Function | Primitive) {
     this.d3Svg = this.d3Svg.attr("height", (d, i: number) => {
-      return mormalizeToFn(fn)(d, i);
+      return normalizeToFn(fn)(d, i);
     });
     return this;
   }
 
   fill(fn: Function | string) {
     this.d3Svg = this.d3Svg.attr("fill", (d, i: number) => {
-      return mormalizeToFn(fn)(d, i);
+      return normalizeToFn(fn)(d, i);
     });
     return this;
   }
@@ -62,7 +62,7 @@ abstract class BaseChart extends AbstractChart {
     .enter()
     .append("text")
     .text((d, i: number) => {
-      return mormalizeToFn(fn)(d, i);
+      return normalizeToFn(fn)(d, i);
     });
 
     // 默认图片位置
@@ -90,7 +90,7 @@ abstract class BaseChart extends AbstractChart {
  *        - if true return fn, 
  *        - else transform to a function return fn;
  */
-function mormalizeToFn(fn: Function|Primitive): Function {
+function normalizeToFn(fn: Function|Primitive): Function {
   if (typeof fn === "function") {
     return fn;
   } else {

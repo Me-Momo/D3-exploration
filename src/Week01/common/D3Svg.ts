@@ -1,4 +1,4 @@
-import * as d3 from "d3";
+import * as d3 from '../../d3-bundle';
 import { ID3Svg, ID3SvgOpts } from './interface/ID3Svg';
 import { IBoxSize } from './interface/dataType';
 
@@ -13,7 +13,7 @@ class D3Svg {
     const container = options.container || DEFAULT_CONTAINER();
     const width = DEFAULT_CONTAINER_WIDTH;
     const height = DEFAULT_CONTAINER__HEIGHT;
-    const { style, wrapperContainerStyle } = options;
+    const { wrapperContainerStyle } = options;
 
     /**
      * initialize wrapperContainer
@@ -27,7 +27,7 @@ class D3Svg {
       .append("svg")
       .attr("width", width)
       .attr("height", height)
-      .style({ ...style } as { [key: string]: string});
+      // .style({ ...style } as { [key: string]: string});
   }
 
   create(): ID3Svg {
